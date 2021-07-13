@@ -15,7 +15,7 @@ int Vasario_menesio_dienos(){   // skaiciuojama kiek dienu yra vasario menesi
     else
         return 28;
 }
-string Men[12] = {"Sausis", "Vasaris", "Kovas", "Balandis", "Geguze", "Birzelis", "Liepa", "Rugpjutis", "Rugsejis", "Spalis", "Lapkritis", "Gruodis"};
+string Men[12] = {"1. Jan", "2. Feb", "3. Mar", "4. Apr", "5. May", "6. Jun", "7. Jul", "8. Aug", "9. Sep", "10. Oct", "11. Nov", "12. Dec"};
 string Duomenys(int x = 0){ // kai bus ziurima i sekanti menesi, x bus 1 (Duomenys(1))
     int kintamasis = now->tm_mon + 1 + x;
     string pradzia = "duom_failai/"; // linuxuose norint pridet subuildinta programa prie startup programu reikia nurodyt abolute path pvz:
