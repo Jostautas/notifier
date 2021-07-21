@@ -15,10 +15,10 @@ int Vasario_menesio_dienos(){   // skaiciuojama kiek dienu yra vasario menesi
     else
         return 28;
 }
-string Men[12] = {"1. Jan", "2. Feb", "3. Mar", "4. Apr", "5. May", "6. Jun", "7. Jul", "8. Aug", "9. Sep", "10. Oct", "11. Nov", "12. Dec"};
+string Men[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 string Duomenys(int x = 0){ // kai bus ziurima i sekanti menesi, x bus 1 (Duomenys(1))
     int kintamasis = now->tm_mon + 1 + x;
-    string pradzia = "duom_failai/"; // linuxuose norint pridet subuildinta programa prie startup programu reikia nurodyt abolute path pvz:
+    string pradzia = "data_files/"; // linuxuose norint pridet subuildinta programa prie startup programu reikia nurodyt abolute path pvz:
 									// string pradzia = "/home/vartotojo_vardas/Documents/programos/gimtadieniai/duom_failai/";
     string pabaiga = ".txt";
     stringstream ss;
@@ -29,7 +29,7 @@ string Duomenys(int x = 0){ // kai bus ziurima i sekanti menesi, x bus 1 (Duomen
 }
 int Dienos[12] = {31, Vasario_menesio_dienos(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // kiek kiekviename menesyje yra dienu
 void sprendimas(){
-    ofstream R("rez.txt"); // norint, kad output failas butu sukuriamas norimam directory reikia rasyt absolute path, pvz norint ji sukurt home directory linuxuose:
+    ofstream R("output.txt"); // norint, kad output failas butu sukuriamas norimam directory reikia rasyt absolute path, pvz norint ji sukurt home directory linuxuose:
 									// ofstream F("/home/vartotojo_vardas/gimtadieniai.txt");
     R << " _________ " << (now->tm_year + 1900) << "-" << setw(2) << setfill('0') << (now->tm_mon + 1) << "-" << setw(2) << setfill('0') << now->tm_mday << " _________" << endl << endl; // Spausdinam dabartini laika (YYY-MM-DD)
     ifstream F(Duomenys(0));    // paruosia dabartinio menesio gimtadieniu nurasyma
