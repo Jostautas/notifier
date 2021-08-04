@@ -9,13 +9,16 @@ using namespace std;
 
 time_t t = time(0);     // Suzino laika
 tm*now = localtime(&t);    // suzino dabartini laika
+
 int Vasario_menesio_dienos(){   // skaiciuojama kiek dienu yra vasario menesi
     if(((now->tm_year + 1900) % 400 == 0) || ((now->tm_year + 1900) % 4 == 0 && (now->tm_year + 1900) %100 !=0))
         return 29;
     else
         return 28;
 }
+
 string Men[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
 string Duomenys(int x = 0){ // kai bus ziurima i sekanti menesi, x bus 1 (Duomenys(1))
     int kintamasis = now->tm_mon + 1 + x;
     string pradzia = "data_files/"; // linuxuose norint pridet subuildinta programa prie startup programu reikia nurodyt abolute path pvz:
@@ -27,9 +30,17 @@ string Duomenys(int x = 0){ // kai bus ziurima i sekanti menesi, x bus 1 (Duomen
     ss >> string_kintamasis;
     return pradzia + string_kintamasis + Men[kintamasis-1] + pabaiga;
 }
+
+void output_path(string &path){ // reads contents from path_to_output_folder.txt and determines where to save the output file
+    ifstream F("../GUI_and_data/path_to_output_folder.txt");
+    getline(F, path);
+    F.close();
+}
+
 int Dienos[12] = {31, Vasario_menesio_dienos(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // kiek kiekviename menesyje yra dienu
-void sprendimas(){
-    ofstream R("output.txt"); // norint, kad output failas butu sukuriamas norimam directory reikia rasyt absolute path, pvz norint ji sukurt home directory linuxuose:
+
+void sprendimas(string path){
+    ofstream R(path + "/output.txt"); // norint, kad output failas butu sukuriamas norimam directory reikia rasyt absolute path, pvz norint ji sukurt home directory linuxuose:
 									// ofstream F("/home/vartotojo_vardas/gimtadieniai.txt");
     R << " _________ " << (now->tm_year + 1900) << "-" << setw(2) << setfill('0') << (now->tm_mon + 1) << "-" << setw(2) << setfill('0') << now->tm_mday << " _________" << endl << endl; // Spausdinam dabartini laika (YYY-MM-DD)
     ifstream F(Duomenys(0));    // paruosia dabartinio menesio gimtadieniu nurasyma
@@ -80,8 +91,11 @@ void sprendimas(){
     F.close();
     R.close();
 }
+
 int main()
 {
-    sprendimas();
+    string path;
+    output_path(path);
+    sprendimas(path);
     return 0;
 }
