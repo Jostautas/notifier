@@ -1,1 +1,1 @@
-Programa, kuri atspausdina i gimtadieniai/rez.txt faila sarasa ateinanciu gimtadieniu, kurie yra surasyti gimtadieniai/duom_failai/ esanciuose .txt failuose.
+Prints out upcoming events. Events are stored in Notifier/GUI_and_data/data_files/

@@ -18,9 +18,9 @@ layout = [[sg.Text(" " * 97), sg.Text("Month:", justification='center', font="An
     [sg.Text("", size=(20, 2), key="selected_month", font="Any 12")],
     [sg.Multiline(f.read(), key="data", size=(80, 15))],
     [sg.Button("Enter data", size=(9, 2)), sg.Text(key="validation", size=(9, 1), font="Any 12")],
-    [sg.Button("Check for any upcoming events", size=(14, 3))],
     [sg.Text("Output file folder:", font="Any 12"), sg.Text(" " * 40), sg.Text(key="validation2", size=(7, 1), font="Any 12")],
-    [sg.Input(folder_path, size=(80, 2)), sg.FolderBrowse("Select a new folder", key="new_folder"), sg.Button("Enter new output folder")]]
+    [sg.Input(folder_path, size=(80, 2)), sg.FolderBrowse("Select a new folder", key="new_folder"), sg.Button("Enter new output folder")],
+    [sg.Button("Check for any upcoming events", size=(14, 3))]]
 
 f.close()
 window = sg.Window("annual reminder", layout)   # size=(880,x)
