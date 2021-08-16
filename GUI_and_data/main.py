@@ -14,12 +14,14 @@ layout = [[sg.Text(" " * 97), sg.Text("Month:", justification='center', font="An
      sg.Button(months[4], size=(15, 5)), sg.Button(months[5], size=(15, 5))],
     [sg.Button(months[6], size=(15, 5)), sg.Button(months[7], size=(15, 5)), sg.Button(months[8], size=(15, 5)), sg.Button(months[9], size=(15, 5)),
      sg.Button(months[10], size=(15, 5)), sg.Button(months[11], size=(15, 5))],
-    [sg.Text("Enter or delete the name of the event and its day of month:", font="Any 12")],
     [sg.Text("", size=(20, 2), key="selected_month", font="Any 12")],
+    [sg.Text("Enter or delete the name of the event and its day of month:", font="Any 12")],
     [sg.Multiline(f.read(), key="data", size=(80, 15))],
     [sg.Button("Enter data", size=(9, 2)), sg.Text(key="validation", size=(9, 1), font="Any 12")],
+    [sg.Text("", size=(20, 2))],
     [sg.Text("Output file folder:", font="Any 12"), sg.Text(" " * 40), sg.Text(key="validation2", size=(7, 1), font="Any 12")],
     [sg.Input(folder_path, size=(80, 2)), sg.FolderBrowse("Select a new folder", key="new_folder"), sg.Button("Enter new output folder")],
+    [sg.Text("", size=(20, 2))],
     [sg.Button("Check for any upcoming events", size=(14, 3))]]
 
 f.close()

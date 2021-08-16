@@ -2,33 +2,33 @@
 #include <fstream>
 #include <iomanip>
 #include <sstream>
-//#include <chrono> //uncomment for compatibility with windows
-//#include <ctime> //uncoment for compatibility with windows
+//#include <chrono> //uncomMontht for compatibility with windows
+//#include <ctime> //uncoMontht for compatibility with windows
 
 using namespace std;
 
-time_t t = time(0);     // Suzino laika
-tm*now = localtime(&t);    // suzino dabartini laika
+time_t t = time(0);     // gets time
+tm*now = localtime(&t);    // gets curront time
 
-int Vasario_menesio_dienos(){   // skaiciuojama kiek dienu yra vasario menesi
+int February_days(){   // counts how many days are in February
     if(((now->tm_year + 1900) % 400 == 0) || ((now->tm_year + 1900) % 4 == 0 && (now->tm_year + 1900) %100 !=0))
         return 29;
     else
         return 28;
 }
 
-string Men[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+string Month[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
-string Duomenys(int x = 0){ // kai bus ziurima i sekanti menesi, x bus 1 (Duomenys(1))
-    int kintamasis = now->tm_mon + 1 + x;
-    string pradzia = "data_files/"; // linuxuose norint pridet subuildinta programa prie startup programu reikia nurodyt abolute path pvz:
-									// string pradzia = "/home/vartotojo_vardas/Documents/programos/gimtadieniai/duom_failai/";
-    string pabaiga = ".txt";
+string Data(int x = 0){     // when this function will used for upcoming month, the x will be 1
+    int variable = now->tm_mon + 1 + x;
+    string beginning = "data_files/"; // in linux, before adding this program to launch on startup, an absolute path to the "data_files" folder is required, eg:
+									// string beginning = "/home/[username]/Programs/notifier/GUI_and_data/data_files/";
+    string end = ".txt";
     stringstream ss;
-    ss << kintamasis;
-    string string_kintamasis;
-    ss >> string_kintamasis;
-    return pradzia + string_kintamasis + Men[kintamasis-1] + pabaiga;
+    ss << variable;
+    string string_variable;
+    ss >> string_variable;
+    return beginning + string_variable + Month[variable-1] + end;
 }
 
 void output_path(string &path){ // reads contents from path_to_output_folder.txt and determines where to save the output file
@@ -37,65 +37,60 @@ void output_path(string &path){ // reads contents from path_to_output_folder.txt
     F.close();
 }
 
-int Dienos[12] = {31, Vasario_menesio_dienos(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // kiek kiekviename menesyje yra dienu
+int Dienos[12] = {31, February_days(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // how many days are in each month
 
-void sprendimas(string path){
-    ofstream R(path + "/output.txt"); // norint, kad output failas butu sukuriamas norimam directory reikia rasyt absolute path, pvz norint ji sukurt home directory linuxuose:
-									// ofstream F("/home/vartotojo_vardas/gimtadieniai.txt");
-    R << " _________ " << (now->tm_year + 1900) << "-" << setw(2) << setfill('0') << (now->tm_mon + 1) << "-" << setw(2) << setfill('0') << now->tm_mday << " _________" << endl << endl; // Spausdinam dabartini laika (YYY-MM-DD)
-    ifstream F(Duomenys(0));    // paruosia dabartinio menesio gimtadieniu nurasyma
-    int k1 = 0; // jei yra ateinanciu gimtadieniu, ir dar nebuvo atspaudintas to gimtadinio menuo, ji atspausdins. Jei nebusbus ateinanciu gitmadieniu, k1 = 0 ir bus parasyta, kad ateinanciu gimtadieniu nera.
-    int k2 = 0; // ziuri ar yra ateinanciu sekancio menesio gimtadieniu
-    int d; // laikina vieta gimimo datai
-    string v, p; // laikina vieta vardui ir pavardei
-    while(F >> v >> p >> d){ // while ciklas suka tiek, kiek tame menesyje yra gimtadieniu. nuskaitomas vardas, pavarde, gimimo diena
-        if((now->tm_mday + 7 >= d) && (d >= now->tm_mday)){ // jei gimimo diena yra 7 arba maziau dienu i prieki ir ne maziau uz dabartine diena
+int main()
+{
+    string path;
+    output_path(path);
+    ofstream R(path + "/output.txt"); // "path" stores an absolute path to where output.txt is stored
+    R << " _________ " << (now->tm_year + 1900) << "-" << setw(2) << setfill('0') << (now->tm_mon + 1) << "-" << setw(2) << setfill('0') << now->tm_mday << " _________" << endl << endl; // prints out current time (YYY-MM-DD)
+    ifstream F(Data(0));    // start of reading current month events
+    int k1 = 0; // if there are upcoming events, and the month of the event hasn't been printed out, prints out the month. If there are no upcoming events, k1 if remain 0 and "There are no upcoming events" will be printed
+    int k2 = 0; // checks if there are any upcoming events next month
+    int day; // temporary variable for event day
+    string name, surname; // temporary variables for name ant surname
+    while(F >> name >> surname >> day){ // while cycles until all data is read. data consists of name, surname and day.
+        if((now->tm_mday + 7 >= day) && (day >= now->tm_mday)){ // if day of the event is in 7 or less days, and current day is not greater that the day of the event
             if(k1 == 0){
-                R << "     " << Men[now->tm_mon] << ":" << endl; // dabartinio menesio pavadinimas
+                R << "     " << Month[now->tm_mon] << ":" << endl; // prints out name of current month
                 k1++;
             }
-            R << v << " " << p << " " << setw(2) << setfill('0') << d << "d." << endl;    // spausdina varda, pavarde ir gimimo diena
+            R << name << " " << surname << " " << setw(2) << setfill('0') << day << "day." << endl;    // print out name, surname, and day of the event
         }
     }
-    //------- Sekantis menesis
-    if(now->tm_mday > Dienos[now->tm_mon] - 7){   // jei iki menesio pabaigos liko maziau negu savaite, ziuri i ateinancio menesio gimtadienius
-        if(now->tm_mon < 11){ // jei menessi yra ne Gruodis (nes 12 + 1 = 13)
-            ifstream F(Duomenys(1));    // paruosia sekancio menesio gimtadieniu nurasyma
-            while(F >> v >> p >> d){ // for ciklas suka tiek, kiek tame menesyje yra gimtadieniu ir jie nuskaitomi
-                if(((d - 7) >= -7) && (d - 7 <= now->tm_mday - Dienos[now->tm_mon])){   // jei is sekancio menesio gimimo dienos atemus savaite, gaunamas minusinis skaicius nemazesnis uz -7 ir mazesnis uz is dabartines dienos atemus menesio dienu skaiciu.
+    //------- Next month
+    if(now->tm_mday > Dienos[now->tm_mon] - 7){   // if there are less than a week of the current month remaining, data from next month is read
+        if(now->tm_mon < 11){ // if month is not December (because 12+1=13)
+            ifstream F(Data(1));    // start of reading next month events
+            while(F >> name >> surname >> day){
+                if(((day - 7) >= -7) && (day - 7 <= now->tm_mday - Dienos[now->tm_mon])){   // if next month's event day minus 7 days <= -7 and <= current day minus total day count of the month
                     if(k2 == 0){
-                        R << endl << "     " << Men[now->tm_mon+1] << ":" << endl; // sekancio menesio pavadinimas
+                        R << endl << "     " << Month[now->tm_mon+1] << ":" << endl;
                         k2++;
                     }
-                    R << v << " " << p << " " << setw(2) << setfill('0') << d << "d." << endl;
+                    R << name << " " << surname << " " << setw(2) << setfill('0') << day << "day." << endl;
                 }
             }
         }
-        else if(now->tm_mon == 11){ // jei dabartinis menesis yra gruodis, reikia duomenis imti is Duom[0] (Duom1.txt)
-            ifstream F(Duomenys(-11));    // paruosia sekancio menesio gimtadieniu nurasyma
-            while(F >> v >> p >> d){ 
-                if(((d - 7) >= -7) && (d - 7 <= now->tm_mday - Dienos[0])){   // jei is sekancio menesio gimimo dienos atemus savaite, gaunamas minusinis skaicius nemazesnis uz -7 ir mazesnis uz is dabartines dienos atemus menesio dienu skaiciu.
+        else if(now->tm_mon == 11){ // if current month is december, we need to read data from the first month file
+            ifstream F(Data(-11));    // start of reading next month (first month) events
+            while(F >> name >> surname >> day){ 
+                if(((day - 7) >= -7) && (day - 7 <= now->tm_mday - Dienos[0])){   // if day of the event - 7 >= -7, but day of the event - 7 <= current day - total day count of the month
                     if(k2 == 0){
-                        R << endl << "     " << Men[0] << ":" << endl; // sekancio menesio pavadinimas
+                        R << endl << "     " << Month[0] << ":" << endl;
                         k2++;
                     }
-                    R << v << " " << p << " " << setw(2) << setfill('0') << d << "d." << endl;
+                    R << name << " " << surname << " " << setw(2) << setfill('0') << day << "day." << endl;
                 }
             }
         }
         else
             R << "Error" << endl;
     }
-    if((k1 == 0) && (k2 == 0)) // jei nera ateinanciu gimtadieniu, spausdinti:
-	    R << "Ateinanciu gimtadieniu nera." << endl;
+    if((k1 == 0) && (k2 == 0)) // if there are no upcoming events print:
+	    R << "There are no upcoming events" << endl;
     F.close();
     R.close();
-}
-
-int main()
-{
-    string path;
-    output_path(path);
-    sprendimas(path);
     return 0;
 }
