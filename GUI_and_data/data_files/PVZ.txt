@@ -1,4 +1,0 @@
-EXAMPLE:
-Vardas        Pavarde         Gimimo diena
-
-Jonas           Jonaitis        9 (arba 09)

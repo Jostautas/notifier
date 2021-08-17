@@ -1,0 +1,3 @@
+EXAMPLE:
+(Name)	(Surname)	   (day)
+John	John	     6
