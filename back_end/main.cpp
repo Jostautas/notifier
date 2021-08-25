@@ -2,13 +2,13 @@
 #include <fstream>
 #include <iomanip>
 #include <sstream>
-//#include <chrono> //uncomMontht for compatibility with windows
-//#include <ctime> //uncoMontht for compatibility with windows
+//#include <chrono> //uncomment for compatibility with windows
+//#include <ctime> //uncomment for compatibility with windows
 
 using namespace std;
 
 time_t t = time(0);     // gets time
-tm*now = localtime(&t);    // gets curront time
+tm*now = localtime(&t);    // gets current time
 
 int February_days(){   // counts how many days are in February
     if(((now->tm_year + 1900) % 400 == 0) || ((now->tm_year + 1900) % 4 == 0 && (now->tm_year + 1900) %100 !=0))
@@ -21,7 +21,7 @@ string Month[12] = {"January", "February", "March", "April", "May", "June", "Jul
 
 string Data(int x = 0){     // when this function will used for upcoming month, the x will be 1
     int variable = now->tm_mon + 1 + x;
-    string beginning = "data_files/"; // in linux, before adding this program to launch on startup, an absolute path to the "data_files" folder is required, eg:
+    string beginning = "[ENTER_ABSOLUTE_PATH]/GUI_and_data/data_files/"; // in linux, before adding this program to launch on startup, an absolute path to the "data_files" folder is required, eg:
 									// string beginning = "/home/[username]/Programs/notifier/GUI_and_data/data_files/";
     string end = ".txt";
     stringstream ss;
@@ -37,7 +37,7 @@ void output_path(string &path){ // reads contents from path_to_output_folder.txt
     F.close();
 }
 
-int Dienos[12] = {31, February_days(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // how many days are in each month
+int Days[12] = {31, February_days(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // how many days are in each month
 
 int main()
 {
@@ -56,32 +56,32 @@ int main()
                 R << "     " << Month[now->tm_mon] << ":" << endl; // prints out name of current month
                 k1++;
             }
-            R << name << " " << surname << " " << setw(2) << setfill('0') << day << "day." << endl;    // print out name, surname, and day of the event
+            R << name << " " << surname << " " << setw(2) << setfill('0') << day << endl;    // print out name, surname, and day of the event
         }
     }
     //------- Next month
-    if(now->tm_mday > Dienos[now->tm_mon] - 7){   // if there are less than a week of the current month remaining, data from next month is read
+    if(now->tm_mday > Days[now->tm_mon] - 7){   // if there are less than a week of the current month remaining, data from next month is read
         if(now->tm_mon < 11){ // if month is not December (because 12+1=13)
             ifstream F(Data(1));    // start of reading next month events
             while(F >> name >> surname >> day){
-                if(((day - 7) >= -7) && (day - 7 <= now->tm_mday - Dienos[now->tm_mon])){   // if next month's event day minus 7 days <= -7 and <= current day minus total day count of the month
+                if(((day - 7) >= -7) && (day - 7 <= now->tm_mday - Days[now->tm_mon])){   // if next month's event day minus 7 days <= -7 and <= current day minus total day count of the month
                     if(k2 == 0){
                         R << endl << "     " << Month[now->tm_mon+1] << ":" << endl;
                         k2++;
                     }
-                    R << name << " " << surname << " " << setw(2) << setfill('0') << day << "day." << endl;
+                    R << name << " " << surname << " " << setw(2) << setfill('0') << day << endl;
                 }
             }
         }
         else if(now->tm_mon == 11){ // if current month is december, we need to read data from the first month file
             ifstream F(Data(-11));    // start of reading next month (first month) events
             while(F >> name >> surname >> day){ 
-                if(((day - 7) >= -7) && (day - 7 <= now->tm_mday - Dienos[0])){   // if day of the event - 7 >= -7, but day of the event - 7 <= current day - total day count of the month
+                if(((day - 7) >= -7) && (day - 7 <= now->tm_mday - Days[0])){   // if day of the event - 7 >= -7, but day of the event - 7 <= current day - total day count of the month
                     if(k2 == 0){
                         R << endl << "     " << Month[0] << ":" << endl;
                         k2++;
                     }
-                    R << name << " " << surname << " " << setw(2) << setfill('0') << day << "day." << endl;
+                    R << name << " " << surname << " " << setw(2) << setfill('0') << day << endl;
                 }
             }
         }

@@ -38,7 +38,7 @@ if __name__ == '__main__':
                     window["selected_month"].Update(event+":")  # prints out name of the selected month
                     window["validation"].Update("")  # removes "Updated" text that pops up when "Enter data" button is pressed
                     window["validation2"].Update("")  # removes "Updated" text that pops up when "Enter new output folder" button is pressed
-                    file_name = "data_files/" + x.replace(". ", "") + ".txt"
+                    file_name = "data_files/" + event.replace(". ", "") + ".txt"
                     with open(file_name) as f:
                         window["data"].Update(f.read())  # prints out contents of a selected file in the sg.Multiline() (line 21)
                     break
