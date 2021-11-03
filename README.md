@@ -9,3 +9,5 @@ Any upcoming annual events (events that are happening within the next week) are 
 The data of events and path of output file can also be easily modified with the help of GUI.
 
 GUI is handled by GUI_and_data/main.py, whereas backend - back_end/main.cpp
+
+Editing of 5th,6th and 24th lines in back_end/main.cpp is required to make it work on your system (both linux and windows)
