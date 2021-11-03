@@ -9,11 +9,11 @@ months = ["1. January", "2. February", "3. March", "4. April", "5. May", "6. Jun
 with open("path_to_output_folder.txt") as fp: # fp - output file folder path
     folder_path = fp.read()    # path to where the output file will be saved
 
-layout = [[sg.Text(" " * 97), sg.Text("Month:", justification='center', font="Any 14")],
-    [sg.Button(months[0], size=(15, 5)), sg.Button(months[1], size=(15, 5)), sg.Button(months[2], size=(15, 5)), sg.Button(months[3], size=(15, 5)),
-     sg.Button(months[4], size=(15, 5)), sg.Button(months[5], size=(15, 5))],
-    [sg.Button(months[6], size=(15, 5)), sg.Button(months[7], size=(15, 5)), sg.Button(months[8], size=(15, 5)), sg.Button(months[9], size=(15, 5)),
-     sg.Button(months[10], size=(15, 5)), sg.Button(months[11], size=(15, 5))],
+layout = [[sg.Text(" " * 99), sg.Text("Month:", justification='center', font="Any 14")],
+    [sg.Button(months[0], size=(16, 5)), sg.Button(months[1], size=(16, 5)), sg.Button(months[2], size=(16, 5)), sg.Button(months[3], size=(16, 5)),
+     sg.Button(months[4], size=(16, 5)), sg.Button(months[5], size=(16, 5))],
+    [sg.Button(months[6], size=(16, 5)), sg.Button(months[7], size=(16, 5)), sg.Button(months[8], size=(16, 5)), sg.Button(months[9], size=(16, 5)),
+     sg.Button(months[10], size=(16, 5)), sg.Button(months[11], size=(16, 5))],
     [sg.Text("", size=(20, 2), key="selected_month", font="Any 12")],
     [sg.Text("Enter or delete the name of the event and its day of month:", font="Any 12")],
     [sg.Multiline(f.read(), key="data", size=(80, 15))],
